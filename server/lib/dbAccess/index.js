@@ -4,47 +4,75 @@
 var q = require('q');
 
 function DbAccess(){
-
+    this.mongoClient = require('mongodb').MongoClient
+    this.db = null;
+    this.usersCollection = null;
 }
 
 
-DbAccess.prototype.connect = function (){
-
+DbAccess.prototype.connect = function (serverUrl,dbName){
+    var deferred = q.defer();
+    var self = this;
+    var url = 'mongodb://'+serverUrl+'/'+ dbName;
+    self.mongoClient.connect(url, function(err, db) {
+        if(err){
+            deferred.reject(err);
+        }else{
+            console.log("Connected correctly to server");
+            self.db = db;
+            self.usersCollection = db.collection('users');
+            deferred.resolve();
+        }
+    });
+    return deferred.promise;
 };
+
+
+DbAccess.prototype.disconnect = function(){
+    if(this.db){
+        this.db.close();
+    }
+}
 
 DbAccess.prototype.createUser = function(name,phoneNumber){
     var deferred = q.defer();
 
-    deferred.resolve('sd7f658f7w6etuy');
+    var userJson = {
+        name:name,
+        phoneNumber:phoneNumber
+    };
 
-    return deferred.promise;
-};
-
-DbAccess.prototype.upsertLocations = function(userGuid , currentLocation,destinationLocation){
-    var deferred = q.defer();
-
-    deferred.resolve();
-
-    return deferred.promise;
-};
-
-DbAccess.prototype.getCompaninons = function(userGuid){
-    var deferred = q.defer();
-
-    var companinos = [
-        {
-            userGuid: 'aksdjfhi76',
-            name: 'roi',
-            phoneNumber: 87657865,
-
-            currentLocation: { lng : 8 , lat : 8 },
-            destinationLocation: { lng : 8 , lat : 8 }
+    this.usersCollection.insertOne(userJson,function(err,result){
+        if(err){
+            deferred.reject(err);
+        }else {
+            var insertedUserId = result["ops"][0]["_id"]
+            deferred.resolve(insertedUserId);
         }
-    ];
-
-    deferred.resolve(companinos);
-
+    });
     return deferred.promise;
+};
+
+DbAccess.prototype.upsertLocations = function(userId , currentLocation,destinationLocation){
+    var deferred = q.defer();
+
+    var updateJson = {
+        currentLocation:currentLocation,
+        destinationLocation:destinationLocation
+    }
+
+    this.usersCollection.update({"_id":userId },updateJson,{"upsert":true},function(err,result){
+        if(err){
+            deferred.reject(err);
+        }else{
+            deferred.resolve();
+        }
+    });
+    return deferred.promise;
+};
+
+DbAccess.prototype.getCompaninons = function(userId){
+
 };
 
 module.exports=DbAccess;
