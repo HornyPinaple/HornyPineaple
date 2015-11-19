@@ -16,6 +16,8 @@
     "url": "https://github.com/DmitryDodzin/hilarious-pineapple/issues"
   },
   "dependencies":{
-    "restify":"*"
+    "restify":"*",
+    "mongodb":"*",
+    "q":"*"
   }
 }
