@@ -1,5 +1,5 @@
 /* Empty. Add your own CSS if you like */
-.login-page{
+.register-page{
 	background-image: url(/img/login-bg.jpg);
 	background-size: cover;
 
@@ -9,14 +9,14 @@
 	align-items: center;
 }
 
-.login-page .login-fields{
+.register-page .register-fields{
 	display: flex;
 	flex:100;
 	flex-direction: column;
 	align-items: center;
 }
 
-.login-page .login-fields.list .item{
+.register-page .register-fields.list .item{
 	width: 80%;
 	background-color: rgba(214,243,217,0.7);
 	margin-bottom: 1em;
