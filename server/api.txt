@@ -1,0 +1,39 @@
+post api/user
+{
+    name: "yuval",
+    phoneNumber: 034534045
+}
+
+response:
+{
+    userGuid: 66776554
+}
+-------------------------------------------------------
+put api/user/locations
+{
+    userGuid :
+    currentLocation:{},
+    destinationLocation:{}
+}
+
+response 200 OK
+-------------------------------------------------------
+
+get api/companions
+{
+    userGuid:
+}
+
+response:
+{
+    results:[
+    {
+        "userGuid":
+        "name": "Roey",
+        phoneNumber: 3464655,
+
+        currentLocation:{},
+        destinationLocation:{}
+    }
+    ]
+}
