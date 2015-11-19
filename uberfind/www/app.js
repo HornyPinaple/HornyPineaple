@@ -25,23 +25,14 @@ angular.module('uberfind', ['ionic','ionic.service.core'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-  .state('app', {
-    url: 'app',
-    abstract: true,
-  })
-
-  .state('app.search', {
-    url: 'search',
+  .state('search', {
+    url: '/search',
     templateUrl: '/states/app/search.html',
   })
 
-  .state('login', {
-    url: '/',
-    templateUrl: '/states/login/login.html',
-  })
-
   .state('register', {
-    url: 'register',
+    url: '/',
+    controller: 'RegisterController',
     templateUrl: '/states/login/register.html',
   })
 
