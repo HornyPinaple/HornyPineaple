@@ -4,4 +4,21 @@
 	background-size: cover;
 
 	height: 100%;
+
+	display: flex;
+	align-items: center;
 }
+
+.login-page .login-fields{
+	display: flex;
+	flex:100;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login-page .login-fields.list .item{
+	width: 80%;
+	background-color: rgba(214,243,217,0.7);
+	margin-bottom: 1em;
+}
+
