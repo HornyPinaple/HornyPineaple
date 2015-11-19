@@ -21,5 +21,7 @@ DbAccess.prototype.getCompaninons = function(userGuid){
 
 };
 
+module.exports=DbAccess;
+
 
 
