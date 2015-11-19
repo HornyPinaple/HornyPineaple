@@ -26,18 +26,23 @@ angular.module('uberfind', ['ionic','ionic.service.core'])
   $stateProvider
 
   .state('app', {
-    url: '/app',
+    url: 'app',
     abstract: true,
   })
 
-  .state('app/search', {
-    url: '/app/search',
-    templateUrl: 'states/app/search.html',
+  .state('app.search', {
+    url: 'search',
+    templateUrl: '/states/app/search.html',
   })
 
   .state('login', {
     url: '/',
-    templateUrl: 'states/login/login.html',
+    templateUrl: '/states/login/login.html',
+  })
+
+  .state('register', {
+    url: 'register',
+    templateUrl: '/states/login/register.html',
   })
 
   // if none of the above states are matched, use this as the fallback
