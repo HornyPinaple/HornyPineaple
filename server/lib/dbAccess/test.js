@@ -15,6 +15,10 @@ dbAccess.connect(config.mongodbServerUrl,config.dbName).then(function(){
         console.log(userId);
         dbAccess.upsertLocations(userId,'loc1','loc2').then(function(){
            console.log('Success.');
+            dbAccess.getUser(userId).then(function(user){
+                console.log('User found.');
+                console.log(user);
+            });
         });
     });
 })

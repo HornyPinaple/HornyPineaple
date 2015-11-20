@@ -2,6 +2,7 @@
  * Created by yuval_000 on 11/19/2015.
  */
 var q = require('q');
+var geolib = require('geolib');
 
 function DbAccess(){
     this.mongoClient = require('mongodb').MongoClient
@@ -61,7 +62,7 @@ DbAccess.prototype.upsertLocations = function(userId , currentLocation,destinati
         destinationLocation:destinationLocation
     }
 
-    this.usersCollection.update({"_id":userId },updateJson,{"upsert":true},function(err,result){
+    this.usersCollection.update({"_id":userId},{$set:updateJson},{"upsert":true},function(err,result){
         if(err){
             deferred.reject(err);
         }else{
@@ -71,8 +72,26 @@ DbAccess.prototype.upsertLocations = function(userId , currentLocation,destinati
     return deferred.promise;
 };
 
-DbAccess.prototype.getCompaninons = function(userId){
+DbAccess.prototype.getUser  = function(userId){
+    var deferred = q.defer();
 
+    var cursor =this.usersCollection.find( { _id: userId } );
+    cursor.each(function(err, doc) {
+        if (err ||  doc == null) {
+            deferred.reject(err);
+        } else {
+            deferred.resolve(doc);
+        }
+    });
+    return deferred.promise;
+}
+
+DbAccess.prototype.getCompaninons = function(userId){
+    this.usersCollection.get(userId).then(function(user){
+
+
+
+    });
 };
 
 module.exports=DbAccess;
