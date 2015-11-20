@@ -2,6 +2,7 @@
  * Created by yuval_000 on 11/19/2015.
  */
 var router = require('./lib/router');
+var config = require('./config.json');
 
 var DbAccess = require('./lib/dbAccess');
 var dbAccess = new DbAccess();
@@ -16,6 +17,9 @@ server.use(restify.bodyParser({ mapParams: false }));
 
 server.listen(8080, function() {
     console.log('%s listening at %s', server.name, server.url);
-    router.route(dbAccess, server);
+
+    dbAccess.connect(config.mongodbServerUrl, config.dbName).then(function(){
+        router.route(dbAccess, server);
+    });
 });
 

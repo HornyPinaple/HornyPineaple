@@ -1,3 +1,5 @@
-/**
- * Created by yuval_000 on 11/19/2015.
- */
+
+{
+  "mongodbServerUrl": "horny-pineapple.cloudapp.net:27017",
+  "dbName": "uberfind"
+}

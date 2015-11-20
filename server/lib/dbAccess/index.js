@@ -87,11 +87,38 @@ DbAccess.prototype.getUser  = function(userId){
 }
 
 DbAccess.prototype.getCompaninons = function(userId){
+    var deferred = q.defer();
+
     this.usersCollection.get(userId).then(function(user){
+        var allUsers = [];
+        var allUsersCursor = this.usersCollection.find({currentLocation: { $exists: true }});
+        allUsersCursor.each(function(err, doc){
+            if (err ||  doc == null) {
+                deferred.reject(err);
+            } else{
+                doc.distance = geolib.getDistance(
+                    {latitude: user.currentLocation.lng, longitude: user.currentLocation.lat},
+                    {latitude: doc.currentLocation.lng, longitude: doc.currentLocation.lat} +
+                    {latitude: user.destinationLocation.lng, longitude: user.destinationLocation.lat},
+                    {latitude: doc.destinationLocation.lng, longitude: doc.destinationLocation.lat});
+                allUsers.push(doc);
+            }
+            allUsers.sort(function(a,b){
+                if(a.distance < b.distance){
+                    return -1;
+                }
+                if(a.distance < b.distance){
+                    return -1;
+                }
+                return 0;
+            });
+            deferred.resolve(allUsers);
+        });
 
 
 
     });
+    return deferred.promise;
 };
 
 module.exports=DbAccess;

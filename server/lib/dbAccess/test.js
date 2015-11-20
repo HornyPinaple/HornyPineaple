@@ -11,14 +11,18 @@ var DbAccess = require('../dbAccess');
 var dbAccess = new DbAccess();
 
 dbAccess.connect(config.mongodbServerUrl,config.dbName).then(function(){
-    dbAccess.createUser('yuval',0525392753).then(function(userId){
-        console.log(userId);
-        dbAccess.upsertLocations(userId,'loc1','loc2').then(function(){
-           console.log('Success.');
-            dbAccess.getUser(userId).then(function(user){
-                console.log('User found.');
-                console.log(user);
-            });
-        });
-    });
+    dbAccess.getCompaninons("564e45e6b8ba040fde699dc8").then(function(){
+        console.log();
+    })
+    //dbAccess.createUser('yuval',0525392753).then(function(userId){
+    //    console.log(userId);
+    //    dbAccess.upsertLocations(userId,'loc1','loc2').then(function(){
+    //       console.log('Success.');
+    //        dbAccess.getUser(userId).then(function(user){
+    //            console.log('User found.');
+    //            console.log(user);
+    //
+    //        });
+    //    });
+    //});
 })
