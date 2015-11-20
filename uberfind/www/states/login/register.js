@@ -1,4 +1,4 @@
-(function(){	
+(function(){
 
 	function RegisterController($scope, $state, ubServerProxy){
 		if('userId' in localStorage){
@@ -20,7 +20,7 @@
 		}
 	}
 
-	RegisterController.$inject = ['$scope', '$state', 'ubServerProxyMock'];
+	RegisterController.$inject = ['$scope', '$state', 'ubServerProxy'];
 
 	angular.module('uberfind').controller('RegisterController', RegisterController);
 })();

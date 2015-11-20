@@ -7,13 +7,10 @@
 			<h3>Search and you shall recive</h3>
 			<label class="item item-input">
 				<i class="icon ion-search placeholder-icon"></i>
-				<input type="text" list="places" ng-model="sr.search">
-					<datalist id="places">
-						<option ng-repeat="option in autocomplePlace(sr.search)" value="{{ option.description }}">
-					</datalist>
+				<input id="search-input" type="text" list="places">
 			</label>
 			<div style="text-align: center; margin-top: 12px">
-				<button class="button button-balanced" ng-click="search()">
+				<button  class="button button-balanced" ng-click="search()">
 					Search
 				</button>
 			</div>

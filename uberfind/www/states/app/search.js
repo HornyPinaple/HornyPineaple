@@ -2,23 +2,16 @@
 
 	function SearchController($scope, $state, ubGoogleApi){
 
-		$scope.sr = {};
+		var origin_input = document.getElementById('search-input');
+
+		var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
 
 		function search(){
-			$state.go('results', { query: $scope.sr.search})
-		}
-
-		var autoComplePromises = {}
-
-		function autocomplePlace(input){
-			if(!(input in autoComplePromises)){
-				autoComplePromises[input] = ubGoogleApi.autoComplePlace(input);
-			} 
-			return autoComplePromises[input];
+			$state.go('results', { query: origin_input.value})
 		}
 
 		$scope.search = search;
-		$scope.autocomplePlace = autocomplePlace;
+
 
 	}
 

@@ -1,6 +1,6 @@
 (function(){
 
-	var server_url = 'http://172.16.2.157:8080/'
+	var server_url = 'http://horny-pineapple.cloudapp.net/'
 
 	function ServerPorxy($q, $http){
 

@@ -11,7 +11,7 @@
 			}
 
 			$http({
-				url: 'https://maps.googleapis.com/maps/api/place/autocomplete/json?callback=JSON_CALLBACK',
+				url: 'https://maps.googleapis.com/maps/api/place/autocomplete/json',
 				method: "GET",
 				params: {
 					input: val,
@@ -28,8 +28,34 @@
 			return dfd.promise;
 		}
 
+		function getLocaiton(lat, lng){
+			var dfd = $q.defer();
+
+			if(!lat || !lng){
+				dfd.resolve();
+				return dfd.promise;
+			}
+
+			$http({
+				url: 'http://maps.googleapis.com/maps/api/geocode/json',
+				method: "GET",
+				params: {
+					latlng: lat + ',' + lng,
+					sensor: 'true'
+				},
+				transformResponse: []
+			}).then(function(result){
+				dfd.resolve(JSON.parse(result.data).results);
+			}, function(err){
+				dfd.reject(err);
+			})
+
+			return dfd.promise;
+		}
+
 		return {
-			autoComplePlace: autoComplePlace
+			autoComplePlace: autoComplePlace,
+			getLocaiton: getLocaiton
 		}
 
 	}
