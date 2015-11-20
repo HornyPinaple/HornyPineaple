@@ -2,7 +2,7 @@
 
 	var map;
 
-function initMap(initOptions, createReloadFn) {
+function initMap(initOptions) {
 	var origin_place_id = null;
 	var destination_place_id = null;
 	var travel_mode = google.maps.TravelMode.WALKING;
@@ -37,36 +37,47 @@ function initMap(initOptions, createReloadFn) {
 		}
 	}
 
-	function place_changed(autocomplete){
+	function place_changed(autocomplete, placeIdFn){
 		var place = autocomplete.getPlace();
-		if (!place.geometry) {
-			window.alert("Autocomplete's returned place contains no geometry");
-			return;
-		}
-		expandViewportToFitPlace(map, place);
+		if(place){
+			if (!place.geometry) {
+				window.alert("Autocomplete's returned place contains no geometry");
+				return;
+			}
+			expandViewportToFitPlace(map, place);
 
-		// If the place has a geometry, store its place ID and route if we have
-		// the other place ID
-		origin_place_id = place.place_id;
-		route(origin_place_id, destination_place_id, travel_mode,
-			directionsService, directionsDisplay);
+			// If the place has a geometry, store its place ID and route if we have
+			// the other place ID
+			placeIdFn(place.place_id);
+			route(origin_place_id, destination_place_id, travel_mode,
+				directionsService, directionsDisplay);
+		}
 	}
 
 	destination_autocomplete.addListener('place_changed', function(){
-		place_changed(destination_autocomplete);
+		place_changed(destination_autocomplete, function(placeId){
+			destination_place_id = placeId;
+		});
 	});
 
-	destination_autocomplete.addListener('place_changed', function(){
-		place_changed(origin_autocomplete);
+	origin_autocomplete.addListener('place_changed', function(){
+		place_changed(origin_autocomplete, function(placeId){
+			origin_place_id = placeId;
+		});
 	});
 
 	function reloadPlaces(){
-		place_changed(origin_autocomplete);
-		place_changed(destination_autocomplete);
+		place_changed(origin_autocomplete, function(placeId){
+			origin_place_id = placeId;
+		});
+
+		place_changed(destination_autocomplete, function(placeId){
+			destination_place_id = placeId;
+		});
 	}
 
-	if(createReloadFn){
-		createReloadFn(reloadPlaces)
+	if(initOptions.createReloadFn){
+		initOptions.createReloadFn(reloadPlaces)
 	}
 
 	function route(origin_place_id, destination_place_id, travel_mode,
@@ -177,13 +188,13 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 					})
 			},
 			createReloadFn: function(fn){
+				setTimeout(function(){
+					fn();
+				}, 2000)
 				$scope.$watch('rs.source', fn);
 				$scope.$watch('rs.query', fn);
 			}
 		}
-
-		
-
 	}
 
 	ResultsController.$inject = ['$scope', '$state', 'ubGoogleApi'];

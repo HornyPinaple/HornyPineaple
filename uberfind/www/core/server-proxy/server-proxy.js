@@ -8,8 +8,13 @@
 			return $q.when($http.post(server_url + 'user', { name: name, phone: phone }))
 		}
 
+		function getOptimalUsers(curLocation, destLocation){
+			
+		}
+
 		return {
-			registerUser: registerUser
+			registerUser: registerUser,
+			getOptimalUsers: getOptimalUsers
 		}
 
 	}
