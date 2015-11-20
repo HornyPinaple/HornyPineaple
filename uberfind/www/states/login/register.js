@@ -6,7 +6,6 @@
 		}
 
 		$scope.lo = {};
-
 		$scope.register = function(){
 			ubServerProxy.registerUser($scope.lo.name, $scope.lo.phone)
 				.then(function(request){
