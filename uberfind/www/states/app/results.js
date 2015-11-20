@@ -6,6 +6,8 @@
 
 		$scope.rs.query = $state.params.query;
 
+		$scope.rs.source = "Current Location"
+
 	}
 
 	ResultsController.$inject = ['$scope', '$state'];

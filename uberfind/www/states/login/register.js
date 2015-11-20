@@ -20,7 +20,7 @@
 		}
 	}
 
-	RegisterController.$inject = ['$scope', '$state', 'ubServerProxy'];
+	RegisterController.$inject = ['$scope', '$state', 'ubServerProxyMock'];
 
 	angular.module('uberfind').controller('RegisterController', RegisterController);
 })();

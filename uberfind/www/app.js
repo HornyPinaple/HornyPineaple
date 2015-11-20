@@ -45,4 +45,5 @@ angular.module('uberfind', ['ionic','ionic.service.core'])
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
-});
+})
+.value('API_KEY', 'AIzaSyAQwcj1GO0tGJzinwk6XJK6W_81QgXQtnU');

@@ -1,6 +1,6 @@
 (function(){
 
-	function SearchController($scope, $state){
+	function SearchController($scope, $state, ubGoogleApi){
 
 		$scope.sr = {};
 
@@ -8,11 +8,21 @@
 			$state.go('results', { query: $scope.sr.search})
 		}
 
+		var autoComplePromises = {}
+
+		function autocomplePlace(input){
+			if(!(input in autoComplePromises)){
+				autoComplePromises[input] = ubGoogleApi.autoComplePlace(input);
+			} 
+			return autoComplePromises[input];
+		}
+
 		$scope.search = search;
+		$scope.autocomplePlace = autocomplePlace;
 
 	}
 
-	SearchController.$inject = ['$scope', '$state'];
+	SearchController.$inject = ['$scope', '$state', 'ubGoogleApi'];
 
 
 	angular.module('uberfind').controller('SearchController', SearchController)
