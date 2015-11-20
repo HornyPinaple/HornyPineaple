@@ -8,10 +8,10 @@
 		$scope.lo = {};
 
 		$scope.register = function(){
-			ubServerProxy.registerUser($scope.lo.user, $scope.lo.phone)
+			ubServerProxy.registerUser($scope.lo.name, $scope.lo.phone)
 				.then(function(request){
 					localStorage.setItem('userId', request.data);
-					localStorage.setItem('name', $scope.lo.user);
+					localStorage.setItem('name', $scope.lo.name);
 					localStorage.setItem('phone', $scope.lo.phone);
 					$state.go('search');
 				}, function(err){

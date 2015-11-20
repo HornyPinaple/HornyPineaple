@@ -27,7 +27,14 @@ angular.module('uberfind', ['ionic','ionic.service.core'])
 
   .state('search', {
     url: '/search',
+    controller: 'SearchController',
     templateUrl: '/states/app/search.html',
+  })
+
+  .state('results', {
+    url: '/results/:query',
+    controller: 'ResultsController',
+    templateUrl: '/states/app/results.html',
   })
 
   .state('register', {
